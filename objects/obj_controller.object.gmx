@@ -56,7 +56,28 @@ yzone = floor(room_height / SNAKE_SIZE / 2) - 1;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>// Obtiene datos del acelerómetro
+            <string>if (!started) {
+    exit;
+}
+
+// Reduce la "vida" de cada eslabón de la serpiente
+show_debug_message("--");
+for (i=0; i&lt;instance_number(obj_snake); i++) {
+    inst = instance_find(obj_snake,i);
+    inst.live--;
+    show_debug_message(string(i) + " " + string(inst.live));
+}
+// Elimina el eslabón
+for (i=0; i&lt;instance_number(obj_snake); i++) {
+    inst = instance_find(obj_snake,i);
+    if (inst.live &lt;= 0) {
+        show_debug_message(string(i) + " removed");
+        with (inst) {
+            instance_destroy();
+        }
+    }
+}
+// Obtiene datos del acelerómetro
 xx = device_get_tilt_x();
 yy = device_get_tilt_y();
 
@@ -74,6 +95,13 @@ if (abs(yy) &gt; abs(xx)) {
     } else {
         yzone--;
     }
+}
+
+if (xzone * SNAKE_SIZE &gt;= room_width or
+    xzone &lt; 0 or
+    yzone * SNAKE_SIZE &gt;= room_height or
+    yzone &lt; 0) {
+    game_restart();
 }
 
 // Crea nueva serpiente
