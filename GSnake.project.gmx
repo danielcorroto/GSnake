@@ -12,10 +12,15 @@
   <paths name="paths"/>
   <objects name="objects">
     <object>objects\obj_controller</object>
+    <object>objects\obj_snake</object>
   </objects>
   <rooms name="rooms">
-    <room>rooms\room0</room>
+    <room>rooms\rm_main</room>
   </rooms>
+  <constants number="2">
+    <constant name="SNAKE_SIZE">32</constant>
+    <constant name="WAIT_TIME">30</constant>
+  </constants>
   <help>
     <rtf>help.rtf</rtf>
   </help>

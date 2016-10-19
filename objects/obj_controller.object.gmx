@@ -29,6 +29,58 @@
 lives = 5;
 // Si el juego está en funcionamiento
 started = false;
+// Tiempo de espera para moverse
+wait = WAIT_TIME;
+// Zona de aparición de la serpiente
+xzone = floor(room_width / SNAKE_SIZE / 2) - 1;
+yzone = floor(room_height / SNAKE_SIZE / 2) - 1;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>// Obtiene datos del acelerómetro
+xx = device_get_tilt_x();
+yy = device_get_tilt_y();
+
+if (abs(yy) &gt; abs(xx)) {
+    // Movimiento horizontal
+    if (yy &gt; 0) {
+        xzone++;
+    } else {
+        xzone--;
+    }
+} else {
+    // Movimiento vertical
+    if (xx &gt; 0) {
+        yzone++;
+    } else {
+        yzone--;
+    }
+}
+
+// Crea nueva serpiente
+inst = instance_create(xzone * SNAKE_SIZE, yzone * SNAKE_SIZE, obj_snake);
+inst.image_xscale = SNAKE_SIZE / inst.sprite_width;
+inst.image_yscale = SNAKE_SIZE / inst.sprite_height;
+alarm_set(0, wait);
 </string>
           </argument>
         </arguments>
@@ -54,7 +106,9 @@ started = false;
             <string>// Inicia el juego
 if (!started) {
     started = true;
+    alarm_set(0, 1);
 }
+
 </string>
           </argument>
         </arguments>
