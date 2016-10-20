@@ -99,16 +99,16 @@ for (i=0; i&lt;instance_number(obj_snake); i++) {
 xx = device_get_tilt_x();
 yy = device_get_tilt_y();
 
-if (abs(yy) &gt; abs(xx)) {
+if (abs(yy) &gt; abs(xx) or keyboard_lastkey == vk_left or keyboard_lastkey == vk_right) {
     // Movimiento horizontal
-    if (yy &gt; 0) {
+    if (yy &gt; 0 or keyboard_lastkey == vk_right) {
         xzone++;
     } else {
         xzone--;
     }
 } else {
     // Movimiento vertical
-    if (xx &gt; 0) {
+    if (xx &gt; 0 or keyboard_lastkey == vk_down) {
         yzone++;
     } else {
         yzone--;
