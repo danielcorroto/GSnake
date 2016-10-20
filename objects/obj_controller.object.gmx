@@ -37,6 +37,9 @@ wait = WAIT_TIME;
 // Zona de aparición de la serpiente
 xzone = floor(room_width / SNAKE_SIZE / 2) - 1;
 yzone = floor(room_height / SNAKE_SIZE / 2) - 1;
+// Ubicación de la fruta
+xfruit = -1;
+yfruit = -1;
 </string>
           </argument>
         </arguments>
@@ -122,6 +125,26 @@ inst = instance_create(xzone * SNAKE_SIZE, yzone * SNAKE_SIZE, obj_snake);
 inst.image_xscale = SNAKE_SIZE / inst.sprite_width;
 inst.image_yscale = SNAKE_SIZE / inst.sprite_height;
 alarm_set(0, wait);
+
+// Evalúa si consigue la fruta
+if (xzone == xfruit and yzone == yfruit) {
+    score++;
+    xfruit = -1;
+    yfruit = -1;
+    with(instance_find(obj_fruit, 0)) {
+        instance_destroy();
+    }
+}
+
+// Genera una nueva fruta
+if (xfruit == -1) {
+    count = 0;
+    for (i=0; i&lt;room_width / SNAKE_SIZE; i++) {
+        for (j=0; j&lt;room_height / SNAKE_SIZE; j++) {
+            if (
+        }
+    }
+}
 </string>
           </argument>
         </arguments>
