@@ -19,7 +19,8 @@
   <rooms name="rooms">
     <room>rooms\rm_main</room>
   </rooms>
-  <constants number="2">
+  <constants number="3">
+    <constant name="EXTRA_LIVES">1</constant>
     <constant name="SNAKE_SIZE">32</constant>
     <constant name="WAIT_TIME">30</constant>
   </constants>

@@ -27,6 +27,14 @@
             <kind>1</kind>
             <string>// Comportamiento de la aplicación
 os_powersave_enable(false);
+randomize();
+
+// Ancho y alto en celdas
+cell_width = round(room_width / SNAKE_SIZE);
+cell_height = round(room_height / SNAKE_SIZE);
+
+// Mapa de celdas ocupadas
+cells = ds_map_create();
 
 // Vidas de cada elemento de la serpiente
 lives = 5;
@@ -35,8 +43,8 @@ started = false;
 // Tiempo de espera para moverse
 wait = WAIT_TIME;
 // Zona de aparición de la serpiente
-xzone = floor(room_width / SNAKE_SIZE / 2) - 1;
-yzone = floor(room_height / SNAKE_SIZE / 2) - 1;
+xzone = floor(cell_width / 2) - 1;
+yzone = floor(cell_height / 2) - 1;
 // Ubicación de la fruta
 xfruit = -1;
 yfruit = -1;
@@ -71,13 +79,17 @@ show_debug_message("--");
 for (i=0; i&lt;instance_number(obj_snake); i++) {
     inst = instance_find(obj_snake,i);
     inst.live--;
-    show_debug_message(string(i) + " " + string(inst.live));
+    //show_debug_message(string(i) + " " + string(inst.live));
 }
 // Elimina el eslabón
 for (i=0; i&lt;instance_number(obj_snake); i++) {
     inst = instance_find(obj_snake,i);
     if (inst.live &lt;= 0) {
-        show_debug_message(string(i) + " removed");
+        cellx = round(inst.x / SNAKE_SIZE);
+        celly = round(inst.y / SNAKE_SIZE);
+        cellid = celly * cell_width + cellx;
+        ds_map_delete(cells, cellid);
+        show_debug_message(string(cellid) + " removed");
         with (inst) {
             instance_destroy();
         }
@@ -121,10 +133,12 @@ if (xzone * SNAKE_SIZE &gt;= room_width or
 }
 
 // Crea nueva serpiente
+cellid = yzone * cell_width + xzone;
+ds_map_add(cells, cellid, true);
 inst = instance_create(xzone * SNAKE_SIZE, yzone * SNAKE_SIZE, obj_snake);
 inst.image_xscale = SNAKE_SIZE / inst.sprite_width;
 inst.image_yscale = SNAKE_SIZE / inst.sprite_height;
-alarm_set(0, wait);
+show_debug_message(string(cellid) + " created");
 
 // Evalúa si consigue la fruta
 if (xzone == xfruit and yzone == yfruit) {
@@ -134,17 +148,41 @@ if (xzone == xfruit and yzone == yfruit) {
     with(instance_find(obj_fruit, 0)) {
         instance_destroy();
     }
+    // Aumenta la vida
+    lives += EXTRA_LIVES;
+    for (i=0; i&lt;instance_number(obj_snake); i++) {
+        inst = instance_find(obj_snake,i);
+        inst.live += EXTRA_LIVES;
+    }
 }
 
 // Genera una nueva fruta
+fruit_option = 0;
 if (xfruit == -1) {
+    // Busca las celdas vacías
     count = 0;
-    for (i=0; i&lt;room_width / SNAKE_SIZE; i++) {
-        for (j=0; j&lt;room_height / SNAKE_SIZE; j++) {
-            if (
+    for (i=0; i&lt;cell_width; i++) {
+        for (j=0; j&lt;cell_height; j++) {
+            if (not ds_map_exists(cells, j * cell_width + i)) {
+                fruit_option[count] = j * cell_width + i;
+                count++;
+            }
         }
     }
+    // Selecciona una al azar
+    fruit_cell = irandom(array_length_1d(fruit_option) - 1);
+    xfruit = fruit_cell mod cell_width;
+    yfruit = fruit_cell div cell_width;
+    
+    fruit = instance_create(xfruit * SNAKE_SIZE, yfruit * SNAKE_SIZE, obj_fruit);
+    fruit.image_xscale = SNAKE_SIZE / fruit.sprite_width;
+    fruit.image_yscale = SNAKE_SIZE / fruit.sprite_height;
+    fruit.image_index = irandom(image_number - 1);
+    fruit.image_speed = 0;
+    show_debug_message(string(yfruit * cell_width + xfruit) + " fruit created");
 }
+
+alarm_set(0, wait);
 </string>
           </argument>
         </arguments>
