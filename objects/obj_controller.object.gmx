@@ -25,7 +25,10 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>// Vidas de cada elemento de la serpiente
+            <string>// Comportamiento de la aplicación
+os_powersave_enable(false);
+
+// Vidas de cada elemento de la serpiente
 lives = 5;
 // Si el juego está en funcionamiento
 started = false;
