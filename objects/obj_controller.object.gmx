@@ -170,7 +170,8 @@ if (xfruit == -1) {
         }
     }
     // Selecciona una al azar
-    fruit_cell = irandom(array_length_1d(fruit_option) - 1);
+    fruit_id = irandom(array_length_1d(fruit_option) - 1);
+    fruit_cell = fruit_option[fruit_id];
     xfruit = fruit_cell mod cell_width;
     yfruit = fruit_cell div cell_width;
     
