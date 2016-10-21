@@ -154,6 +154,8 @@ if (xzone == xfruit and yzone == yfruit) {
         inst = instance_find(obj_snake,i);
         inst.live += EXTRA_LIVES;
     }
+    // Muestra el marcador
+    instance_create(room_width / 2, room_height / 2, obj_score);
 }
 
 // Genera una nueva fruta
