@@ -9,6 +9,7 @@
     <sprite>sprites\spr_snake</sprite>
     <sprite>sprites\spr_fruit</sprite>
     <sprite>sprites\spr_start</sprite>
+    <sprite>sprites\spr_pause</sprite>
     <sprite>sprites\spr_score</sprite>
   </sprites>
   <backgrounds name="background"/>
@@ -27,6 +28,7 @@
     <object>objects\obj_fruit</object>
     <object>objects\obj_start</object>
     <object>objects\obj_score</object>
+    <object>objects\obj_continue</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_main</room>
