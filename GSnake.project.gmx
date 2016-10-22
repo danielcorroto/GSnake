@@ -16,6 +16,7 @@
   <scripts name="scripts">
     <script>scripts\scr_next_direction.gml</script>
     <script>scripts\scr_max_direction.gml</script>
+    <script>scripts\scr_eval_collision.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fnt_score</font>
