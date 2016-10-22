@@ -13,6 +13,9 @@
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
+  <scripts name="scripts">
+    <script>scripts\scr_next_direction.gml</script>
+  </scripts>
   <fonts name="fonts">
     <font>fonts\fnt_score</font>
   </fonts>
@@ -26,7 +29,12 @@
   <rooms name="rooms">
     <room>rooms\rm_main</room>
   </rooms>
-  <constants number="3">
+  <constants number="8">
+    <constant name="DIR_DOWN">3</constant>
+    <constant name="DIR_LEFT">4</constant>
+    <constant name="DIR_NO">0</constant>
+    <constant name="DIR_RIGHT">2</constant>
+    <constant name="DIR_UP">1</constant>
     <constant name="EXTRA_LIVES">5</constant>
     <constant name="SNAKE_SIZE">32</constant>
     <constant name="WAIT_TIME">max(3, 10 - obj_controller.score / 10)</constant>

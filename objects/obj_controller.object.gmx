@@ -48,6 +48,8 @@ yzone = floor(cell_height / 2) - 1;
 // Ubicación de la fruta
 xfruit = -1;
 yfruit = -1;
+// Dirección de la serpiente
+dir = DIR_NO;
 </string>
           </argument>
         </arguments>
@@ -95,25 +97,13 @@ for (i=0; i&lt;instance_number(obj_snake); i++) {
         }
     }
 }
-// Obtiene datos del acelerómetro
-xx = device_get_tilt_x();
-yy = device_get_tilt_y();
 
-if (abs(yy) &gt; abs(xx) or keyboard_lastkey == vk_left or keyboard_lastkey == vk_right) {
-    // Movimiento horizontal
-    if (yy &gt; 0 or keyboard_lastkey == vk_right) {
-        xzone++;
-    } else {
-        xzone--;
-    }
-} else {
-    // Movimiento vertical
-    if (xx &gt; 0 or keyboard_lastkey == vk_down) {
-        yzone++;
-    } else {
-        yzone--;
-    }
-}
+// Cálculo de la nueva dirección
+dir = scr_next_direction(dir);
+if (dir == DIR_UP) yzone--;
+else if (dir == DIR_RIGHT) xzone++;
+else if (dir == DIR_DOWN) yzone++;
+else if (dir == DIR_LEFT) xzone--;
 
 // Finaliza la partida si hay colisión
 for (i=0; i&lt;instance_number(obj_snake); i++) {
